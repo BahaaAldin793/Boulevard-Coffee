@@ -1,7 +1,11 @@
+// src/utils.ts (الدالة sendOrderToGoogleSheet المعدلة)
+
 import { CartItem, CheckoutForm, Weight } from './types';
 import { weightMultipliers } from './data';
-import { sendOrderToSheet } from './googleSheet';
+// هنستورد الدالة الجديدة من googleSheet.ts
+import { sendOrderToSheet as postToGoogleSheet } from './googleSheet'; 
 
+// باقي الدوال زي ما هي...
 export const calculatePrice = (basePrice: number, weight: Weight): number => {
   return basePrice * weightMultipliers[weight];
 };
@@ -19,24 +23,26 @@ export const loadCartFromLocalStorage = (): CartItem[] => {
   return saved ? JSON.parse(saved) : [];
 };
 
-export const sendOrderToGoogleSheet = async (form: CheckoutForm, cart: CartItem[]) => {
+// الدالة دي هي اللي تعدلت عشان ترجع boolean
+export const sendOrderToGoogleSheet = async (form: CheckoutForm, cart: CartItem[]): Promise<boolean> => { 
+  // تجميع البيانات بنفس الشكل اللي Google Script مستنيه
   const orderData = {
-    timestamp: new Date().toISOString(),
-    customerName: form.name,
-    address: form.address,
-    phone: form.phone,
+    customerName: form.name, // متوافق مع السكريبت
+    address: form.address,   // متوافق مع السكريبت
+    phone: form.phone,       // متوافق مع السكريبت
     items: cart.map(item => ({
       product: item.product.name,
       weight: item.weight,
       quantity: item.quantity,
-      price: item.price,
-      total: item.price * item.quantity
+      price: item.price, // السكريبت مش بيستخدمها بس ممكن نسيبها
+      total: item.price * item.quantity // السكريبت مش بيستخدمها
     })),
-    totalAmount: getTotalPrice(cart)
+    // السكريبت مش بيستخدم الإجمالي ده، هو بيحسبه لوحده لو عايز
+    // totalAmount: getTotalPrice(cart) 
   };
 
-  console.log('Order submitted:', orderData);
+  console.log('Order Data Prepared:', orderData); // اطبع البيانات قبل الإرسال للتأكد
 
-  await sendOrderToSheet(orderData);
-  return orderData;
+  // هنستدعي الدالة اللي في googleSheet.ts ونرجع الرد بتاعها (true أو false)
+  return await postToGoogleSheet(orderData); 
 };

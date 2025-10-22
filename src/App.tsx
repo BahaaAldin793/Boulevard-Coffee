@@ -51,18 +51,44 @@ function App() {
     setCart(newCart);
   };
 
+  // App.tsx (دالة handleCheckout المعدلة)
+
   const handleCheckout = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault(); // امنع الفورم من إعادة تحميل الصفحة
     if (cart.length === 0) {
-      alert('السلة فارغة');
-      return;
+      alert('السلة فارغة. الرجاء إضافة منتجات أولاً.');
+      return; // اخرج لو السلة فاضية
     }
 
-    await sendOrderToGoogleSheet(checkoutForm, cart);
-    alert('تم إرسال طلبك بنجاح! سنتواصل معك قريباً');
-    setCart([]);
-    setCheckoutForm({ name: '', address: '', phone: '' });
-    setShowCart(false);
+    // ممكن نضيف loading state هنا عشان المستخدم يعرف إن الطلب بيتبعت
+    // setLoading(true); 
+
+    try {
+      // استدعي الدالة وانتظر الرد (true أو false)
+      const success = await sendOrderToGoogleSheet(checkoutForm, cart);
+
+      // setLoading(false); // شيل الـ loading
+
+      // افحص الرد اللي راجع
+      if (success === true) {
+        // لو نجح (رجع true)
+        alert('✅ تم إرسال طلبك بنجاح! سنتواصل معك قريباً');
+        // فضي السلة والفورم
+        setCart([]); 
+        setCheckoutForm({ name: '', address: '', phone: '' });
+        setShowCart(false); // اقفل نافذة السلة
+      } else {
+        // لو فشل (رجع false)
+        // رسالة الخطأ هتكون طلعت بالفعل من googleSheet.ts
+        // متعملش حاجة هنا، سيب الفورم مليان عشان المستخدم يقدر يحاول تاني
+        console.log("Order submission failed. Check console for details.");
+      }
+    } catch (error) {
+      // ده عشان لو حصل خطأ غير متوقع أثناء استدعاء الدالة نفسها
+      // setLoading(false); // شيل الـ loading
+      console.error("Unexpected error during checkout process:", error);
+      alert("⚠️ حدث خطأ غير متوقع أثناء محاولة إرسال الطلب.");
+    }
   };
 
   const scrollToSection = (id: string) => {
