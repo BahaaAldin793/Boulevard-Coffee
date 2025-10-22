@@ -3,7 +3,7 @@ export async function sendOrderToSheet(orderData: any) {
     console.log("📦 Sending order:", orderData);
 
     const response = await fetch(
-      "/.netlify/functions/sendOrder",
+      "https://script.google.com/macros/s/AKfycby3aGGkbRziDlTE3ZBcBJ8dSEeslwnl0_O4oVohZ2pybtvSxneHGXZ0keLEPlTwDs-0/exec",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
