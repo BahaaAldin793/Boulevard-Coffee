@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ShoppingCart, Phone, Instagram, Facebook } from 'lucide-react';
 import { Product, CartItem, Weight, CheckoutForm } from './types';
-import { products, weightMultipliers } from './data';
+import { products } from './data';
 import { calculatePrice, getTotalPrice, saveCartToLocalStorage, loadCartFromLocalStorage, sendOrderToGoogleSheet } from './utils';
 
 function App() {
@@ -139,7 +139,7 @@ function App() {
       <section id="products" className="py-20 px-4">
         <div className="container mx-auto">
           <h2 className="text-4xl font-bold text-center text-[#3B2F2F] mb-12">منتجاتنا</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {products.map(product => (
               <ProductCard key={product.id} product={product} onAddToCart={addToCart} />
             ))}

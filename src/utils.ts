@@ -1,5 +1,6 @@
 import { CartItem, CheckoutForm, Weight } from './types';
 import { weightMultipliers } from './data';
+import { sendOrderToSheet } from './googleSheet';
 
 export const calculatePrice = (basePrice: number, weight: Weight): number => {
   return basePrice * weightMultipliers[weight];
@@ -36,5 +37,6 @@ export const sendOrderToGoogleSheet = async (form: CheckoutForm, cart: CartItem[
 
   console.log('Order submitted:', orderData);
 
+  await sendOrderToSheet(orderData);
   return orderData;
 };
