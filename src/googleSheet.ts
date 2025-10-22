@@ -3,7 +3,7 @@ export async function sendOrderToSheet(orderData: any) {
     console.log("📦 Sending order:", orderData);
 
     const response = await fetch(
-      "https://script.google.com/macros/s/AKfycbzHnp5ffKM0YHVLHnt4olRi2aVec36p9k6lDeatFBH85zaeZXlZ0OIhEeJppzQhJkA/exec",
+      "https://script.google.com/macros/s/AKfycbx4byYHvYw4tiNHQxoKdmhoBvKJ4tnZessk0ozk_lETK54tCo_5VujUjprlTkPlcsI/exec",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
