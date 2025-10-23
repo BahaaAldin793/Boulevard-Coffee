@@ -1,48 +1,45 @@
-// src/utils.ts (الدالة sendOrderToGoogleSheet المعدلة)
-
-import { CartItem, CheckoutForm, Weight } from './types';
+import { CartItem, Weight } from './types'; // Removed CheckoutForm import as it's not needed here anymore
 import { weightMultipliers } from './data';
-// هنستورد الدالة الجديدة من googleSheet.ts
-import { sendOrderToSheet as postToGoogleSheet } from './googleSheet'; 
 
-// باقي الدوال زي ما هي...
+// Function to calculate price based on weight
 export const calculatePrice = (basePrice: number, weight: Weight): number => {
-  return basePrice * weightMultipliers[weight];
+  // Ensure the weight exists in the multiplier object, default to 1 if not found
+  const multiplier = weightMultipliers[weight] ?? 1;
+  return basePrice * multiplier;
 };
 
+// Function to calculate the total price of the cart
 export const getTotalPrice = (cart: CartItem[]): number => {
   return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
 };
 
+// Function to save the cart state to local storage
 export const saveCartToLocalStorage = (cart: CartItem[]) => {
-  localStorage.setItem('boulevardCart', JSON.stringify(cart));
+  try {
+    localStorage.setItem('boulevardCart', JSON.stringify(cart));
+  } catch (error) {
+    console.error("Error saving cart to local storage:", error);
+    // Handle potential storage errors (e.g., storage full)
+  }
 };
 
+// Function to load the cart state from local storage
 export const loadCartFromLocalStorage = (): CartItem[] => {
-  const saved = localStorage.getItem('boulevardCart');
-  return saved ? JSON.parse(saved) : [];
+  try {
+    const saved = localStorage.getItem('boulevardCart');
+    // Basic check to ensure saved data is an array
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed)) {
+        return parsed;
+      }
+    }
+  } catch (error) {
+    console.error("Error loading cart from local storage:", error);
+    // Clear corrupted data if parsing fails
+    localStorage.removeItem('boulevardCart');
+  }
+  return []; // Return empty array if nothing saved or error occurred
 };
 
-// الدالة دي هي اللي تعدلت عشان ترجع boolean
-export const sendOrderToGoogleSheet = async (form: CheckoutForm, cart: CartItem[]): Promise<boolean> => { 
-  // تجميع البيانات بنفس الشكل اللي Google Script مستنيه
-  const orderData = {
-    customerName: form.name, // متوافق مع السكريبت
-    address: form.address,   // متوافق مع السكريبت
-    phone: form.phone,       // متوافق مع السكريبت
-    items: cart.map(item => ({
-      product: item.product.name,
-      weight: item.weight,
-      quantity: item.quantity,
-      price: item.price, // السكريبت مش بيستخدمها بس ممكن نسيبها
-      total: item.price * item.quantity // السكريبت مش بيستخدمها
-    })),
-    // السكريبت مش بيستخدم الإجمالي ده، هو بيحسبه لوحده لو عايز
-    // totalAmount: getTotalPrice(cart) 
-  };
-
-  console.log('Order Data Prepared:', orderData); // اطبع البيانات قبل الإرسال للتأكد
-
-  // هنستدعي الدالة اللي في googleSheet.ts ونرجع الرد بتاعها (true أو false)
-  return await postToGoogleSheet(orderData); 
-};
+// No sendOrderToGoogleSheet function needed anymore
