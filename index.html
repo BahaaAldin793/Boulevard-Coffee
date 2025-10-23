@@ -10,6 +10,14 @@
     <title>بن بوليفارد - Boulevard Coffee</title>
   </head>
   <body>
+    <form name="order-form" data-netlify="true" hidden>
+      <input type="hidden" name="form-name" value="order-form" />
+      <input type="text" name="name" />
+      <input type="text" name="address" />
+      <input type="tel" name="phone" />
+      <textarea name="cart-details"></textarea>
+      <input type="text" name="total-price" />
+    </form>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
