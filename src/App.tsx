@@ -179,7 +179,7 @@ function App() {
 
       {/* Hero Section */}
       <section id="home" className="relative min-h-[70vh] flex items-center justify-center text-center px-4 py-16 md:py-20 bg-cover bg-center " style={{ backgroundImage: "url('/HeroBackground.jpg')" }}> {/* Placeholder background */}
-         <div className="absolute inset-0 bg-white opacity-70 backdrop-blur-sm"></div> {/* Overlay */}
+         <div className="absolute inset-0 bg-white opacity-30 backdrop-blur-sm"></div> {/* Overlay */}
         <div className="relative z-10 max-w-4xl mx-auto">
           <img
             src="/WhatsApp Image 2025-10-21 at 23.45.42_483bfdca.jpg" // Ensure this image path is correct
