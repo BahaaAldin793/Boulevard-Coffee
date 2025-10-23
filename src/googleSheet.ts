@@ -5,7 +5,7 @@ export async function sendOrderToSheet(orderData: any): Promise<boolean> { // <-
     console.log("📦 Sending order:", orderData);
 
     const response = await fetch(
-      "https://script.google.com/macros/s/AKfycbwydyUrk01J63TMcZnkfJGA9H6mS-5XemerCvL5iQ_dU4UsF2cnn_6r-6A503YnfufHyw/exec", // <--- غيّر الرابط ده بالرابط الجديد
+      "https://script.google.com/macros/s/AKfycbydyy1bJ63TMzZnkJGA9HbmS-5XemerOvLSjQ_dI4fUofFzmm_6r-6A503Ymfuhyw/exec", // <--- غيّر الرابط ده بالرابط الجديد
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
