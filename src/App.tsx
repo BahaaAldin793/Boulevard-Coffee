@@ -177,27 +177,37 @@ function App() {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section id="home" className="relative min-h-[70vh] flex items-center justify-center text-center px-4 py-16 md:py-20 bg-cover bg-center" style={{ backgroundImage: "url('https://placehold.co/1920x1080/D4A574/3B2F2F?text=Coffee+Background')" }}> {/* Placeholder background */}
-         <div className="absolute inset-0 bg-black opacity-30"></div> {/* Overlay */}
-        <div className="relative z-10 max-w-4xl mx-auto">
-          <img
-            src="/WhatsApp Image 2025-10-21 at 23.45.42_483bfdca.jpg" // Ensure this image path is correct
-            alt="Boulevard Coffee"
-            className="w-40 h-40 md:w-48 md:h-48 mx-auto mb-6 object-contain rounded-full shadow-lg" // Added rounded-full & shadow
-          />
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-md"> {/* White text for contrast */}
-            بن بوليفارد
-          </h1>
-          <p className="text-xl sm:text-2xl md:text-3xl text-gray-200 mb-8 leading-relaxed drop-shadow-sm"> {/* Lighter text */}
-            استمتع بمذاق القهوة الأصيلة من بن بوليفارد
-          </p>
-          <button
-            onClick={() => scrollToSection('products')}
-            className="bg-[#C49A6C] hover:bg-[#B8895A] text-white px-6 py-3 md:px-8 md:py-4 rounded-lg text-lg md:text-xl font-semibold transition shadow-lg hover:shadow-xl transform hover:scale-105"
-          >
-            تسوق الآن
-          </button>
+      {/* Hero Section (نسخة محسنة) */}
+      <section
+        id="home"
+        className="relative min-h-[70vh] flex items-center px-4 py-16 md:py-20 bg-cover bg-center"
+        // --- الخطوة 1: تغيير الخلفية ---
+        // غيّر 'hero-bg.jpg' لاسم الصورة الحقيقية اللي هتحطها في فولدر public
+        style={{ backgroundImage: "url('/hero-bg.jpg')" }}
+      >
+        {/* --- الخطوة 2: تغميق الـ Overlay --- */}
+        <div className="absolute inset-0 bg-black opacity-60"></div> {/* كانت opacity-30 */}
+        
+        {/* --- الخطوة 3: تغيير المحاذاة والمحتوى --- */}
+        <div className="container mx-auto"> {/* ضيفنا container علشان نظبط المسافات */}
+          <div className="relative z-10 max-w-2xl text-right"> {/* غيرنا المحاذاة لليمين */}
+            
+            {/* --- الخطوة 4: حذفنا اللوجو المتكرر --- */}
+            {/* <img ... />  <- اللوجو اللي كان هنا اتحذف */}
+
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-md">
+              مذاق أصيل... يبدأ كل صباح
+            </h1>
+            <p className="text-xl sm:text-2xl text-gray-200 mb-8 leading-relaxed drop-shadow-sm">
+              اكتشف مجموعتنا الفاخرة من البن المحمص بعناية.
+            </p>
+            <button
+              onClick={() => scrollToSection('products')}
+              className="bg-[#C49A6C] hover:bg-[#B8895A] text-white px-6 py-3 md:px-8 md:py-4 rounded-lg text-lg md:text-xl font-semibold transition shadow-lg hover:shadow-xl transform hover:scale-105"
+            >
+              تسوق الآن
+            </button>
+          </div>
         </div>
       </section>
 
