@@ -178,7 +178,7 @@ function App() {
       </header>
 
       {/* Hero Section */}
-      <section id="home" className="relative min-h-[70vh] flex items-center justify-center text-center px-4 py-16 md:py-20 bg-cover bg-center" style={{ backgroundImage: "url('https://placehold.co/1920x1080/D4A574/3B2F2F?text=Coffee+Background')" }}> {/* Placeholder background */}
+      <section id="home" className="relative min-h-[70vh] flex items-center justify-center text-center px-4 py-16 md:py-20 bg-cover bg-center" style={{ backgroundImage: "url('/HeroBackground.jpg')" }}> {/* Placeholder background */}
          <div className="absolute inset-0 bg-black opacity-30"></div> {/* Overlay */}
         <div className="relative z-10 max-w-4xl mx-auto">
           <img
